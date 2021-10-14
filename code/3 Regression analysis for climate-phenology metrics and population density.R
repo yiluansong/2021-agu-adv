@@ -557,8 +557,8 @@ make_diag_plot("anglediffnew")
 make_diag_plot("mismatch")
 
 ##### MAT and elevation correlation (Figure S5)
-elevation <- elevatr::get_elev_raster(data.frame(long=c(-180,0, -180), lat=c(30, 50, 70)), prj= "+proj=longlat +datum=WGS84 +no_defs", z = 1)
-elevation<-crop(elevation,e)
+elevation <- elevatr::get_elev_raster(data.frame(long = c(-180, 0, -180), lat = c(30, 50, 70)), prj = "+proj=longlat +datum=WGS84 +no_defs", z = 1)
+elevation <- crop(elevation, e)
 elev_re <- resample(elevation, C[[1]])
 df_elev <- as.data.frame(elev_re, xy = T)
 colnames(df_elev) <- c("x", "y", "elev")
@@ -581,4 +581,3 @@ ggplot(df_combined) +
   theme_classic() +
   scale_fill_viridis_c()
 dev.off()
-
