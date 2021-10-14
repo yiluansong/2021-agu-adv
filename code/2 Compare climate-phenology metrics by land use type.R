@@ -103,7 +103,7 @@ combineddf %>%
 # percentage of settlements
 (combineddf %>% filter(cover_name == "Settlements") %>% nrow()) / (combineddf %>% nrow())
 
-# test difference in distribution
+# test difference in climate-phenology metrics
 anova_res <- aov(lm(Vc ~ cover_name, data = combineddf))
 tukey_res <- TukeyHSD(x = anova_res, conf.level = 0.95)
 tukey_res

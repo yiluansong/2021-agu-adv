@@ -380,7 +380,7 @@ median(values(vg[[1]]), na.rm = T) * 111.325 * 2 * 3
 # [1] 5.53448
 
 ### 0.5 deg
-file <- c("./Data/Phenology/LOS_World_0.5deg_QA.nc")
+file <- c("./data/LOS_World_0.5deg_QA.nc")
 P <- brick(file)
 P <- crop(P, e) * NOSmask0.5 * QAmask0.5
 
@@ -508,7 +508,7 @@ grid.arrange(annotate_figure(p_C + latticeExtra::layer(sp.polygons(land)) + latt
 )
 dev.off()
 
-# continue to code 3 for spatial regression (Table S2)
+# continue to code 3 for spatial regression (Table S2). Details omitted here.
 
 ### Summary statistics for different study areas (Figure S8)
 file <- c("./data/MAT.nc")
@@ -614,3 +614,4 @@ grid.arrange(annotate_figure(p_compare[[1]], fig.lab = "a", fig.lab.pos = "top.l
   ncol = 1
 )
 dev.off()
+

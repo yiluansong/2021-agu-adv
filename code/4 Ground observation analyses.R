@@ -20,17 +20,17 @@ species_list <- rnpn::npn_species() %>%
 # https://www.usanpn.org/files/articles/developing_a_plant_profile.pdf
 
 # run only once to download data
-for (i in 1:nrow(species_list)) {
-  npn_df <- rnpn::npn_download_site_phenometrics(
-    request_source = "YS",
-    years = as.character(1980:2021),
-    species_ids = species_list$species_id[i],
-    pheno_class_ids = 1,
-    climate_data = T
-  )
-  write_csv(npn_df, paste0(path_npn, species_list$species_id[i], ".csv"))
-  print(i)
-}
+# for (i in 1:nrow(species_list)) {
+#   npn_df <- rnpn::npn_download_site_phenometrics(
+#     request_source = "YS",
+#     years = as.character(1980:2021),
+#     species_ids = species_list$species_id[i],
+#     pheno_class_ids = 1,
+#     climate_data = T
+#   )
+#   write_csv(npn_df, paste0(path_npn, species_list$species_id[i], ".csv"))
+#   print(i)
+# }
 
 ### Calculate mismatch
 data_list <- vector(mode = "list")
