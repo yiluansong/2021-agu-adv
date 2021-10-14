@@ -1,4 +1,4 @@
-# Code for  the first part of 2.1.3 (leading to Figure 3 and supplementary figures)
+# Code for the first part of 2.1.3 (leading to Figure 3 and supplementary figures)
 
 source("./code/setup/packages.R")
 source("./code/setup/masks.R")

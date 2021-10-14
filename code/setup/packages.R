@@ -8,6 +8,7 @@ pacman::p_load(ggpubr)
 pacman::p_load(spBayes)
 pacman::p_load(gstat)
 pacman::p_load(rgdal)
+pacman::p_load(rgeos)
 pacman::p_load(devtools)
 if (!"VoCC" %in% rownames(installed.packages())) {
   devtools::install_github("JorGarMol/VoCC", dependencies = TRUE, build_vignettes = FALSE)
