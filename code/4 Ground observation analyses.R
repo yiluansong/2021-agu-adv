@@ -1,5 +1,6 @@
 # Code for 2.2 (leading to Figure 5)
-source("./tools/packages.R")
+
+source("./code/setup/packages.R")
 
 ##### Ground observation analyses (Figure 5)
 ### Get human population

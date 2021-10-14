@@ -1,8 +1,8 @@
 # Code for  the first part of 2.1.3 (leading to Figure 3 and supplementary figures)
 
-source("./tools/packages.R")
-source("./tools/load masks.R")
-source("./tools/graphing settings.R")
+source("./code/setup/packages.R")
+source("./code/setup/masks.R")
+source("./code/setup/graphics.R")
 
 ##### Compare climate-phenology metrics by land use type (Figure 3)
 ### Get climate-phenology metrics

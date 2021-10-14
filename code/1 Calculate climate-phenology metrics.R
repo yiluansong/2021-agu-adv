@@ -1,8 +1,8 @@
 # Code for 2.1.2 (leading to Figure 2 and supplementary figures)
 
-source("./tools/packages.R")
-source("./tools/load masks.R")
-source("./tools/graphing settings.R")
+source("./code/setup/packages.R")
+source("./code/setup/masks.R")
+source("./code/setup/graphics.R")
 
 ##### Calculate climate-phenology metrics (Figure 2, S9, S10, S12)
 season_list <- c(
