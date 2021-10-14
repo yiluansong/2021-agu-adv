@@ -1,15 +1,16 @@
 # Code for 2.1.2 (leading to Figure 2 and supplementary figures)
 
-source("./tools/packages.R")
-source("./tools/load masks.R")
-source("./tools/graphing settings.R")
+source("./code/setup/packages.R")
+source("./code/setup/masks.R")
+source("./code/setup/graphics.R")
 
 ##### Calculate climate-phenology metrics (Figure 2, S9, S10, S12)
 season_list <- c(
   "year", # (for MAT vs GSL Figure 2)
   "spring", # (for MST vs SOS Figure S9)
   "fall", # (for MFT vs EOS Figure S10)
-  "year_prcp") # (for MAP vs GSL Figure S12)
+  "year_prcp"
+) # (for MAP vs GSL Figure S12)
 
 for (season in season_list) {
   ### Vc
@@ -614,4 +615,3 @@ grid.arrange(annotate_figure(p_compare[[1]], fig.lab = "a", fig.lab.pos = "top.l
   ncol = 1
 )
 dev.off()
-

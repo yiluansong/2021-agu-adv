@@ -1,8 +1,8 @@
 # Code for  the second part of 2.1.3 (leading to Figure 4 and supplementary figures)
 
-source("./tools/packages.R")
-source("./tools/load masks.R")
-source("./tools/graphing settings.R")
+source("./code/setup/packages.R")
+source("./code/setup/masks.R")
+source("./code/setup/graphics.R")
 
 ##### Regression analysis for climate-phenology metrics and population density (Figure 4, Table S3, S4, S5, Figure S6, S7)
 ### Get climate-phenology metrics
