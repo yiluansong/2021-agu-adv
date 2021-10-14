@@ -5,6 +5,34 @@ source("./tools/load masks.R")
 source("./tools/graphing settings.R")
 
 ##### Regression analysis for climate-phenology metrics and population density (Figure 4, Table S3, S4, S5, Figure S6, S7)
+### Get climate-phenology metrics
+file <- c("./data/MAT.nc") # mean annual temperature
+C <- brick(file)
+C <- C[[81:114]]
+vt <- tempTrend(C, th = 10)
+vg <- spatGrad(C, th = -Inf, projected = FALSE)
+gv <- gVoCC(vt, vg)
+gv <- crop(gv, e) * NOSmask0.5 * QAmask0.5
+Vc <- abs(gv[[1]])
+AngC <- gv[[2]]
+VcX <- Vc * sin(AngC * pi / 180)
+VcY <- Vc * cos(AngC * pi / 180)
+
+file <- c("./data/LOS_World_0.5deg_QA.nc") # length of season
+P <- brick(file)
+vt <- tempTrend(P, th = 10)
+vg <- spatGrad(P, th = -Inf, projected = FALSE)
+gv <- gVoCC(vt, vg)
+gv <- crop(gv, e) * NOSmask0.5 * QAmask0.5
+Vp <- abs(gv[[1]])
+AngP <- gv[[2]]
+VpX <- Vp * sin(AngP * pi / 180)
+VpY <- Vp * cos(AngP * pi / 180)
+
+projection <- (VcX * VpX + VcY * VpY) / Vc
+anglediff <- abs(((AngC - AngP) + 180) %% 360 - 180)
+mismatch <- projection - Vc
+
 ### Get human population
 file <- c("./data/gpw_v4_population_density_rev11_30_min.nc")
 Human <- brick(file)[[1]]
@@ -17,6 +45,19 @@ p_human <- levelplot(Human,
 )
 # p_human + latticeExtra::layer(sp.polygons(land))
 
+# check human population density in each land use type
+file <- c("./data/anthro2_a2000.nc")
+cover <- raster(file)
+cover <- crop(cover, e)
+cover[cover < 30] <- 1 # settlements
+cover[cover > 30 & cover < 40] <- 2 # croplands
+cover[cover > 40 & cover < 50] <- 3 # rangelands
+cover[cover > 50 & cover < 60] <- 4 # semilatural
+cover[cover > 60] <- 5 # wild
+cover_name <- c("Settlements", "Croplands", "Rangelands", "Semi-natural", "Wildlands")
+Cover <- c(1, 2, 3, 4, 5)
+cover_key <- data.frame(Cover, cover_name)
+
 Human_1_6 <- resample(Human, cover, method = "ngb")
 human_cover_brick <- brick(Human_1_6, cover)
 human_cover_df <- as.data.frame(human_cover_brick)
@@ -25,9 +66,39 @@ human_cover_df <- merge(x = human_cover_df, y = cover_key, by = "Cover", all = T
 human_cover_df$cover_name <- fct_relevel(human_cover_df$cover_name, c("Wildlands", "Seminatural", "Rangelands", "Croplands", "Settlements"))
 human_cover_df$Human <- human_cover_df$Human + 1
 human_cover_df <- na.omit(human_cover_df)
-head(human_cover_df)
 
-# summary(res.aov <- aov(Human ~ cover_name, data = human_cover_df))
+summary(res.aov <- aov(Human ~ cover_name, data = human_cover_df))
+
+middle <- aggregate(human_cover_df$Human, list(human_cover_df$cover_name), median)[, 2]
+ymin <- aggregate(human_cover_df$Human, list(human_cover_df$cover_name), function(x) {
+  quantile(x, 0.025)
+})[, 2]
+ymax <- aggregate(human_cover_df$Human, list(human_cover_df$cover_name), function(x) {
+  quantile(x, 0.975)
+})[, 2]
+lower <- aggregate(human_cover_df$Human, list(human_cover_df$cover_name), function(x) {
+  quantile(x, 0.25)
+})[, 2]
+upper <- aggregate(human_cover_df$Human, list(human_cover_df$cover_name), function(x) {
+  quantile(x, 0.75)
+})[, 2]
+
+df_boxplot <- data.frame(bin = unique(human_cover_df$cover_name), middle=log(middle), ymin=log(ymin), ymax=log(ymax), lower=log(lower), upper=log(upper))
+p_human_cover <-
+  ggplot(df_boxplot, aes(bin, middle)) +
+  geom_point(pch=NA) +
+  geom_segment(aes(x = seq(1, 5, 1), y = lower, xend = seq(1, 5, 1), yend = upper), colour = "darkblue", size = 5) +
+  geom_segment(aes(x = seq(1, 5, 1), y = ymin, xend = seq(1, 5, 1), yend = ymax), colour = "black") +
+  geom_segment(aes(x = seq(0.75, 4.75, 1), y = middle, xend = seq(1.25, 5.25, 1), yend = middle), colour = "black", size = 1) +
+  # scale_x_discrete(labels=c("Wildlands", "Seminatural","Rangelands","Croplands","Settlements"))+
+  scale_y_continuous(breaks=log(c(1,10,100,1000)), labels=c(1,10,100,1000))+
+  xlab("Land use type") +
+  ylab(expression("Population density (persons km"^-2 * ")")) +
+  # ylab(expression(bolditalic(v)[MAT]* " (km yr"^-1 * ")")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+p_human_cover
 
 ### Prepare dataframe for regression
 projection_df <- as.data.frame(projection, xy = TRUE)
