@@ -121,10 +121,9 @@ png(
 )
 us_map <- map_data("world") %>% filter(region == "USA")
 p_map <- ggplot(data_all) +
-  geom_polygon(data = us_map %>% filter(lat > -150), aes(x = long, y = lat, group = group), color = "gray", fill = "gray") +
-  coord_map(projection = "albers", parameters = c(20, 50)) +
+  geom_polygon(data = us_map %>% filter(long < 0, lat > 25), aes(x = long, y = lat, group = group), color = "gray", fill = "gray") +
+  coord_map(projection = "albers", parameters = c(30,40), orientation = c(90,0,-105)) +
   geom_point(aes(x = lon, y = lat, col = common_name), alpha = 0.25) +
-  xlim(-170, -70) +
   theme_void() +
   theme(legend.position = "none")
 print(p_map)
