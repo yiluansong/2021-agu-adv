@@ -256,7 +256,8 @@ p_x_axis <-
   theme(panel.background = element_blank()) +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 0, b = 0, l = 0)))
 
-cairo_pdf("./figures/Figure 4.pdf", width = 10, height = 6)
+png(filename = "./figures/Figure 4.png", width = 10*600, height = 6*600, res=600)
+# cairo_pdf("./figures/Figure 4.pdf", width = 10, height = 6)
 grid.arrange(
   grobs = list(
     annotate_figure(p_human + latticeExtra::layer(sp.polygons(land)), fig.lab = "a", fig.lab.pos = "top.left", fig.lab.face = "bold"),

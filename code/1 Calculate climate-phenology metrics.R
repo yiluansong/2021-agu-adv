@@ -267,7 +267,8 @@ for (season in season_list) {
         theme_classic()
     }
 
-    cairo_pdf("./figures/Figure 2.pdf", width = 10, height = 9)
+    png(filename = "./figures/Figure 2.png", width = 10*600, height = 9*600, res=600)
+    # cairo_pdf("./figures/Figure 2.pdf", width = 10, height = 9)
     schematic <- get_schematic(season)
     grid.arrange(annotate_figure(p_C + latticeExtra::layer(sp.polygons(land)) + latticeExtra::layer(grid.raster(schematic[[1]], x = 0.025, y = 0.3, height = 0.6, just = "left", interpolate = F), under = FALSE), fig.lab = "a", fig.lab.pos = "top.left", fig.lab.face = "bold"),
       annotate_figure(p_P + latticeExtra::layer(sp.polygons(land)) + latticeExtra::layer(grid.raster(schematic[[2]], x = 0.025, y = 0.3, height = 0.6, just = "left", interpolate = F), under = FALSE), fig.lab = "b", fig.lab.pos = "top.left", fig.lab.face = "bold"),
@@ -290,13 +291,16 @@ for (season in season_list) {
   }
   if (season != "year") {
     if (season == "spring") {
-      cairo_pdf("./figures/Figure S9.pdf", width = 8, height = 9)
+      png(filename = "./figures/Figure S9.png", width = 8*600, height = 9*600, res=600)
+      # cairo_pdf("./figures/Figure S9.pdf", width = 8, height = 9)
     }
     if (season == "fall") {
-      cairo_pdf("./figures/Figure S10.pdf", width = 8, height = 9)
+      png(filename = "./figures/Figure S10.png", width = 8*600, height = 9*600, res=600)
+      # cairo_pdf("./figures/Figure S10.pdf", width = 8, height = 9)
     }
     if (season == "year_prcp") {
-      cairo_pdf("./figures/Figure S12.pdf", width = 8, height = 9)
+      png(filename = "./figures/Figure S12.png", width = 8*600, height = 9*600, res=600)
+      # cairo_pdf("./figures/Figure S12.pdf", width = 8, height = 9)
     }
   }
   schematic <- get_schematic(season)
@@ -500,7 +504,8 @@ p_mismatch <- levelplot(mismatch,
 )
 # p_mismatch + latticeExtra::layer(sp.polygons(land))
 
-cairo_pdf("./figures/Figure S2.pdf", width = 8, height = 9)
+png(filename = "./figures/Figure S2.png", width = 8*600, height = 9*600, res=600)
+# cairo_pdf("./figures/Figure S2.pdf", width = 8, height = 9)
 grid.arrange(annotate_figure(p_C + latticeExtra::layer(sp.polygons(land)) + latticeExtra::layer(grid.raster(schematic[[1]], x = 0.025, y = 0.3, height = 0.6, just = "left", interpolate = F), under = FALSE), fig.lab = "a", fig.lab.pos = "top.left", fig.lab.face = "bold"),
   annotate_figure(p_P + latticeExtra::layer(sp.polygons(land)) + latticeExtra::layer(grid.raster(schematic[[2]], x = 0.025, y = 0.3, height = 0.6, just = "left", interpolate = F), under = FALSE), fig.lab = "b", fig.lab.pos = "top.left", fig.lab.face = "bold"),
   annotate_figure(p_anglediff + latticeExtra::layer(sp.polygons(land)) + latticeExtra::layer(grid.raster(schematic[[3]], x = 0.025, y = 0.3, height = 0.6, just = "left", interpolate = F), under = FALSE), fig.lab = "c", fig.lab.pos = "top.left", fig.lab.face = "bold"),

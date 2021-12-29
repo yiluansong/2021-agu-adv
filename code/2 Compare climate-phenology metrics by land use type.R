@@ -300,7 +300,8 @@ p_y_axis <-
 p_void <- ggplot() +
   theme_void()
 
-cairo_pdf("./figures/Figure 3.pdf", width = 10, height = 7)
+png(filename = "./figures/Figure 3.png", width = 10*600, height = 7*600, res=600)
+# cairo_pdf("./figures/Figure 3.pdf", width = 10, height = 7)
 grid.arrange(
   grobs = list(
     annotate_figure(p_cover + latticeExtra::layer(sp.polygons(land)), fig.lab = "a", fig.lab.pos = "top.left", fig.lab.face = "bold"),
@@ -429,7 +430,8 @@ p_pft_hist <-
   guides(fill = guide_legend("plant functional type")) +
   theme_classic()
 
-cairo_pdf("./figures/Figure S11.pdf", width = 10, height = 5)
+png(filename = "./figures/Figure S11.png", width = 10*600, height = 5*600, res=600)
+# cairo_pdf("./figures/Figure S11.pdf", width = 10, height = 5)
 grid.arrange(annotate_figure(p_pft + latticeExtra::layer(sp.polygons(land)), fig.lab = "a", fig.lab.pos = "top.left", fig.lab.face = "bold"),
   annotate_figure(p_pft_hist, fig.lab = "b", fig.lab.pos = "top.left", fig.lab.face = "bold"),
   ncol = 1
